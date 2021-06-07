@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  ui:
+    container_name: ui
+    build:
+      context: https://github.com/Sander-N/User-Interface.git
+      dockerfile: Dockerfile
+    ports:
+    - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    restart: always
+    networks:
+      - frontend
+
+  voting-api:
+    container_name: voting-api
+    build:
+      context: https://github.com/Sander-N/Voting.git
+      dockerfile: Dockerfile
+    ports:
+    - 8080:8080
+    restart: always
+    networks:
+      - frontend
+
+networks:
+  frontend:
