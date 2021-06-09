@@ -53,6 +53,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: "voting@app.com"
       PGADMIN_DEFAULT_PASSWORD: "Votingapp1!"
