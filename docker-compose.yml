@@ -8,7 +8,7 @@ services:
       context: https://github.com/Sander-N/User-Interface.git
       dockerfile: Dockerfile
     ports:
-    - 3000:3000
+      - 3000:3000
     environment:
       - CHOKIDAR_USEPOLLING=true
     restart: always
@@ -21,20 +21,48 @@ services:
       context: https://github.com/Sander-N/Voting.git
       dockerfile: Dockerfile
     ports:
-    - 8080:8080
+      - 8080:8080
     restart: always
     networks:
       - frontend
       - messaging
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     ports:
-    - "5672:5672"
-    - "15672:15672"
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - messaging
 
+  db:
+    image: postgres:alpine
+    container_name: vote-db
+    restart: always
+    environment:
+      - POSTGRES_USER=votinguser
+      - POSTGRES_PASSWORD=votingpass
+      - POSTGRES_DB=voting
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "voting@app.com"
+      PGADMIN_DEFAULT_PASSWORD: "Votingapp1!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+    networks:
+      - db
 networks:
   frontend:
   messaging:
+  db:
