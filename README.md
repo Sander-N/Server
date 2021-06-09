@@ -21,6 +21,7 @@ Password: Votingapp1!
 Name: Voting  
 Host: db  
 Port: 5432  
+DB name: voting  
 Username: votinguser  
 Password: votingpass  
   
