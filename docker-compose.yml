@@ -27,6 +27,21 @@ services:
       - frontend
       - messaging
 
+  worker:
+    container_name: worker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    restart: always
+    networks:
+      - db
+      - messaging
+    depends_on:
+      - db
+      - rabbitmq
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
