@@ -30,7 +30,7 @@ services:
   worker:
     container_name: worker
     build:
-      context: .
+      context: https://github.com/Sander-N/Worker.git
       dockerfile: Dockerfile
     ports:
       - 8081:8081
